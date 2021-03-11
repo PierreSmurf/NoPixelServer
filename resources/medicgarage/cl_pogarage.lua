@@ -10,7 +10,7 @@ end
 function DrawText3Ds(x,y,z, text)
     local onScreen,_x,_y=World3dToScreen2d(x,y,z)
     local px,py,pz=table.unpack(GetGameplayCamCoords())
-    
+
     SetTextScale(0.35, 0.35)
     SetTextFont(4)
     SetTextProportional(1)
@@ -55,7 +55,7 @@ local cmd = {
 	["classic"] = { event = 'medicg:s_classic' },
 	["classic2"] = { event = 'medicg:s_classic2' },
 	["classic3"] = { event = 'medicg:s_classic3' },
-	["classic4"] = { event = 'medicg:s_classic4' },			
+	["classic4"] = { event = 'medicg:s_classic4' },
 	["helico"] = { event = 'medicg:s_helico' },
 	["firetruk"] = { event = 'medicg:firetruk' },
 }
@@ -73,7 +73,7 @@ function InitMenuVehicules(isWhitelisted)
 	ClearMenu()
 	if isWhitelisted then
 		Menu.addButton("Ambulance", "callSE", cmd["classic"].event)
-		Menu.addButton("Chief 4WD", "callSE", cmd["ems1"].event)	
+		Menu.addButton("Chief 4WD", "callSE", cmd["ems1"].event)
 		Menu.addButton("Command", "callSE", cmd["ems2"].event)
 		Menu.addButton("SCRT", "callSE", cmd["ems3"].event)
 		Menu.addButton("SCRT", "callSE", cmd["ems4"].event)
@@ -150,8 +150,8 @@ AddEventHandler('event:control:hospitalGarage', function(useID)
 			TriggerServerEvent('tattoos:retrieve')
 			TriggerServerEvent('Blemishes:retrieve')
 			TriggerEvent("police:noLongerCop")
-			TriggerEvent("logoffmedic")		
-			TriggerEvent("loggedoff")					
+			TriggerEvent("logoffmedic")
+			TriggerEvent("loggedoff")
 			TriggerEvent('nowCopDeathOff')
 		    TriggerEvent('nowCopSpawnOff')
 		    TriggerEvent('nowMedicOff')
@@ -161,7 +161,7 @@ AddEventHandler('event:control:hospitalGarage', function(useID)
 		    SetPedRelationshipGroupDefaultHash(PlayerPedId(),`PLAYER`)
 		    SetPoliceIgnorePlayer(PlayerPedId(),false)
 		    TriggerEvent("DoLongHudText",'Signed off Duty!',1)
-	    end	
+	    end
 	end
 end)
 
@@ -181,10 +181,10 @@ Citizen.CreateThread(function()
 			end
 		end
 
-		if distancec > 50.0 then
+		if distancec > 10.0 then
 			Citizen.Wait(math.ceil(distancec))
 		end
-		
+
 		Menu.renderGUI()
 	end
 end)
@@ -201,7 +201,7 @@ AddEventHandler('medicg:firetruk', function()
 	if lastPlate ~= nil then
 		TriggerEvent("keys:remove",lastPlate)
 	end
-	
+
 
 	local myPed = PlayerPedId()
 	local player = PlayerId()
@@ -211,7 +211,7 @@ AddEventHandler('medicg:firetruk', function()
 		Wait(1)
 	end
 
-  local plate = "EMS ".. GetRandomIntInRange(1000, 9000)
+  local plate = "EMS".. GetRandomIntInRange(1000, 9000)
 	local spawned_car = CreateVehicle(vehicle, signInLocation[spawnNumber][1],signInLocation[spawnNumber][2],signInLocation[spawnNumber][3], -20.0, true, false)
 
 	--SetVehicleOnGroundProperly(spawned_car)
@@ -220,8 +220,8 @@ AddEventHandler('medicg:firetruk', function()
   TriggerServerEvent('garages:addJobPlate', plate)
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	lastPlate = plate
-	
-	
+
+
   Wait(250)
   TriggerEvent('car:engine')
 end)
@@ -238,7 +238,7 @@ AddEventHandler('medicg:c_classic', function()
 	if lastPlate ~= nil then
 		TriggerEvent("keys:remove",lastPlate)
 	end
-	
+
 
 	local myPed = PlayerPedId()
 	local player = PlayerId()
@@ -257,8 +257,8 @@ AddEventHandler('medicg:c_classic', function()
   TriggerServerEvent('garages:addJobPlate', plate)
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	lastPlate = plate
-	
-	
+
+
   Wait(250)
   TriggerEvent('car:engine')
 end)
@@ -275,7 +275,7 @@ AddEventHandler('medicg:c_classic2', function()
 	if lastPlate ~= nil then
 		TriggerEvent("keys:remove",lastPlate)
 	end
-	
+
 
 	local myPed = PlayerPedId()
 	local player = PlayerId()
@@ -294,8 +294,8 @@ AddEventHandler('medicg:c_classic2', function()
 	TriggerServerEvent('garages:addJobPlate', plate)
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	lastPlate = plate
-	
-	
+
+
 	Wait(250)
 	TriggerEvent('car:engine')
 end)
@@ -312,7 +312,7 @@ AddEventHandler('medicg:c_classic3', function()
 	if lastPlate ~= nil then
 		TriggerEvent("keys:remove",lastPlate)
 	end
-	
+
 
 	local myPed = PlayerPedId()
 	local player = PlayerId()
@@ -331,8 +331,8 @@ AddEventHandler('medicg:c_classic3', function()
   TriggerServerEvent('garages:addJobPlate', plate)
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	lastPlate = plate
-	
-	
+
+
   Wait(250)
   TriggerEvent('car:engine')
 end)
@@ -349,7 +349,7 @@ AddEventHandler('medicg:c_classic4', function()
 	if lastPlate ~= nil then
 		TriggerEvent("keys:remove",lastPlate)
 	end
-	
+
 
 	local myPed = PlayerPedId()
 	local player = PlayerId()
@@ -368,8 +368,8 @@ AddEventHandler('medicg:c_classic4', function()
   TriggerServerEvent('garages:addJobPlate', plate)
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	lastPlate = plate
-	
-	
+
+
   Wait(250)
   TriggerEvent('car:engine')
 end)
@@ -381,7 +381,7 @@ AddEventHandler('medicg:c_helico', function()
 	if lastPlate ~= nil then
 		TriggerEvent("keys:remove",lastPlate)
 	end
-	
+
 
 	local myPed = PlayerPedId()
 	local player = PlayerId()
@@ -391,7 +391,7 @@ AddEventHandler('medicg:c_helico', function()
 		Wait(1)
 	end
 
-  local plate = "EMS ".. GetRandomIntInRange(1000, 9000)
+  local plate = "EMS".. GetRandomIntInRange(1000, 9000)
 	local coords = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0, 5.0, 0)
 	local spawned_car = CreateVehicle(vehicle, coords, signInLocation[spawnNumber][1],signInLocation[spawnNumber][2],signInLocation[spawnNumber][3], true, false)
 
@@ -401,6 +401,6 @@ AddEventHandler('medicg:c_helico', function()
   TriggerServerEvent('garages:addJobPlate', plate)
 	SetPedIntoVehicle(myPed, spawned_car, - 1)
 	lastPlate = plate
-	
-	
+
+
 end)

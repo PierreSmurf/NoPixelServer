@@ -29,7 +29,7 @@ jobs = {peds = {}, flag = {}, blip = {}, cars = {}, coords = {cx={}, cy={}, cz={
 
 function StartJob(jobid)
 	if jobid == 1 then -- ambulance
-		showLoadingPromt("Loading EMS mission", 2000, 3)
+		showLoadingPromt("Carregando missão EMS", 2000, 3)
 		-- Hospital heal points
 		jobs.coords.cx[1],jobs.coords.cy[1],jobs.coords.cz[1] = 363.92,-586.94,28.68
 		jobs.coords.cx[2],jobs.coords.cy[2],jobs.coords.cz[2] = -453.97,-339.53,34.36
@@ -47,7 +47,7 @@ function StartJob(jobid)
 		jobs.flag[1] = 0
 		jobs.flag[2] = 259+GetRandomIntInRange(1, 61)
 		Wait(2000)
-		DrawMissionText("Drive around until you get a ~h~~y~call~w~.", 10000)
+		DrawMissionText("Dirija até chegar a um ~h~~y~chamado~w~.", 10000)
 		onJob = jobid
 	end
 end
@@ -152,7 +152,7 @@ Citizen.CreateThread(function()
 								Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(jobs.blip[1]))
 								jobs.blip[1] = nil
 							end
-							DrawMissionText("The patient ~r~passed away~w~. Drive around until you get another call.", 5000)
+							DrawMissionText("O paciente ~r~faleceu~w~. Dirija até receber outra ligação.", 5000)
 						else
 							if jobs.flag[1] == 1 and jobs.flag[2] > 0 then
 								Wait(2000)
@@ -168,7 +168,7 @@ Citizen.CreateThread(function()
 									ClearPedTasksImmediately(jobs.peds[1])
 									Citizen.InvokeNative(0xB736A491E64A32CF,Citizen.PointerValueIntInitialized(jobs.peds[1]))
 									jobs.peds[1] = nil
-									DrawMissionText("The patient ~r~passed away~w~ while on route. Drive around until you get another ~h~~y~request~w~.", 5000)
+									DrawMissionText("O paciente faleceu durante o trajeto. Dirija até que você receba outro ~h~pedido~y~~w~.", 5000)
 									jobs.flag[1] = 0
 									jobs.flag[2] = 259+GetRandomIntInRange(1, 61)
 								else
@@ -201,13 +201,13 @@ Citizen.CreateThread(function()
 									ClearPedTasksImmediately(jobs.peds[1])
 									Citizen.InvokeNative(0xB736A491E64A32CF,Citizen.PointerValueIntInitialized(jobs.peds[1]))
 									jobs.peds[1] = nil
-									DrawMissionText("~r~The patient is not going with you~w~. Drive around until you get another ~h~~y~request~w~.", 5000)
+									DrawMissionText("~r~O paciente não vai com você~w~. Dirija até receber outra ~h~~y~solicitação~w~ de.", 5000)
 									jobs.flag[1] = 0
 									jobs.flag[2] = 259+GetRandomIntInRange(1, 61)
 								else
 									if IsPedSittingInVehicle(jobs.peds[1], jobs.cars[1]) then
 										local pedb = GetBlipFromEntity(jobs.peds[1])
-										lastPatient = jobs.peds[1]					
+										lastPatient = jobs.peds[1]
 
 										if pedb ~= nil and DoesBlipExist(pedb) then
 											SetBlipSprite(pedb, 2)
@@ -217,10 +217,10 @@ Citizen.CreateThread(function()
 										jobs.flag[2] = GetRandomIntInRange(1, 8)
 										local street = table.pack(GetStreetNameAtCoord(jobs.coords.cx[jobs.flag[2]],jobs.coords.cy[jobs.flag[2]],jobs.coords.cz[jobs.flag[2]]))
 										if street[2] ~= 0 and street[2] ~= nil then
-											local streetname = string.format("~w~Take me to~y~ %s~w~, nearby~y~ %s", GetStreetNameFromHashKey(street[1]),GetStreetNameFromHashKey(street[2]))
+											local streetname = string.format("~w~Leve-me para o~y~ %s~w~, próxima~y~ %s", GetStreetNameFromHashKey(street[1]),GetStreetNameFromHashKey(street[2]))
 											DrawMissionText(streetname, 5000)
 										else
-											local streetname = string.format("~w~Take me to the~y~ %s", GetStreetNameFromHashKey(street[1]))
+											local streetname = string.format("~w~Leve-me para o~y~ %s", GetStreetNameFromHashKey(street[1]))
 											DrawMissionText(streetname, 5000)
 										end
 										local location = GetEntityCoords(PlayerPedId(), 0)
@@ -263,12 +263,12 @@ Citizen.CreateThread(function()
 									jobs.peds[1] = nil
 									Wait(2000)
 
-	                DrawMissionText("~g~You have delivered the patient!", 5000)								    
+	                DrawMissionText("~g~Você entregou o paciente!", 5000)
 									local util = exports["np-base"]:getModule("Util")
-									util:MissionText("You gained ~g~$"..mypayambulance.."~w~", 5000)
+									util:MissionText("Você recebeu ~g~$"..mypayambulance.."~w~", 5000)
 									TriggerServerEvent('mission:completed', mypayambulance)
 									Wait(2000)
-									DrawMissionText("Drive around until you get another ~h~~y~request~w~.", 10000)
+									DrawMissionText("Dirija até que você receba outro ~h~~y~pedido~w~.", 10000)
 									jobs.flag[1] = 0
 									jobs.flag[2] = 59+GetRandomIntInRange(1, 90)
 								end
@@ -277,7 +277,7 @@ Citizen.CreateThread(function()
 					else
 						Wait(20000)
 						-- Don't look for jobs if we already have someone in the back
-						if isSignedIn == true and (IsVehicleSeatFree(jobs.cars[1], 1) and IsVehicleSeatFree(jobs.cars[1], 2)) and GetRandomIntInRange(0, 100) > 75 then							
+						if isSignedIn == true and (IsVehicleSeatFree(jobs.cars[1], 1) and IsVehicleSeatFree(jobs.cars[1], 2)) and GetRandomIntInRange(0, 100) > 75 then
 							local pos = GetEntityCoords(PlayerPedId())
 							local randX = GetRandomIntInRange(35, 155)
 							local randY = GetRandomIntInRange(35, 155)
@@ -298,7 +298,7 @@ Citizen.CreateThread(function()
 									TaskStartScenarioInPlace(jobs.peds[1], "PROP_HUMAN_STAND_IMPATIENT", 0, true);
 								end
 								SetBlockingOfNonTemporaryEvents(jobs.peds[1], 1)
-								DrawMissionText("The ~g~patient~w~ is waiting for you. Drive nearby", 5000)
+								DrawMissionText("O ~g~ paciente ~w~ está esperando por você. Dirija por perto.", 5000)
 								local lblip = AddBlipForEntity(jobs.peds[1])
 								SetBlipAsFriendly(lblip, 1)
 								SetBlipColour(lblip, 2)
@@ -306,7 +306,7 @@ Citizen.CreateThread(function()
 							else
 								jobs.flag[1] = 0
 								jobs.flag[2] = 59+GetRandomIntInRange(1, 90)
-								DrawMissionText("Drive around until you get another ~h~~y~request~w~.", 10000)
+								DrawMissionText("Dirija até receber outra ~h~~y~solicitação~w~.", 10000)
 							end
 						end
 					end
@@ -314,12 +314,12 @@ Citizen.CreateThread(function()
 					if #(GetEntityCoords(PlayerPedId()) - GetEntityCoords(jobs.cars[1])) > 30.0001 then
 						StopJob(1)
 					else
-						DrawMissionText("Get back in your car to ~y~continue~w~. Or go away from the ambulance to ~r~stop~ the mission.", 1)
+						DrawMissionText("Volte para o carro para ~y~continuar~w~. Ou saia da ambulância para ~r~parar~ a missão.", 1)
 					end
 				end
 			else
 				StopJob(1)
-				DrawMissionText("The ambulance is ~h~~r~destroyed~w~.", 5000)
+				DrawMissionText("A ambulância está ~h~~r~destruída~w~.", 5000)
 			end
 		end
 	end
